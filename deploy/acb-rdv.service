@@ -1,0 +1,19 @@
+[Unit]
+Description=ACB RendezVous server (acb-rdv-py)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=acb-rdv
+Group=acb-rdv
+WorkingDirectory=/opt/acb-rdv-py
+ExecStart=/usr/bin/python3 -m acb_rdv -c /etc/acb-rdv/config.toml
+NoNewPrivileges=true
+Restart=always
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

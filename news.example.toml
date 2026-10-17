@@ -1,0 +1,20 @@
+# In-game news (config: news = "news.toml"). Newest first; the file is
+# reloaded when it changes. subject and body are required. id (a unique
+# positive number; defaults to the position), date, sender and link are
+# optional. The game shows at most 64 characters of subject and sender.
+
+[[news]]
+id = 2
+date = 2026-10-04
+sender = "AN"
+subject = "Server news works"
+body = """
+News are now served by acb-rdv-py.
+A second line, to check line breaks.
+"""
+
+[[news]]
+id = 1
+date = 2026-10-01T18:00:00
+subject = "Welcome"
+body = "Welcome to the Assassins' Network servers."

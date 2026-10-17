@@ -1,0 +1,64 @@
+# acb-rdv-py configuration. Every key can be overridden with an environment
+# variable: ACB_RDV_<KEY> (e.g. ACB_RDV_PUBLIC_ADDRESS), ACB_RDV_NAT_<KEY> for [nat].
+
+# Address the game is told to connect to (IPv4 or hostname; resolved at start).
+public_address = "203.0.113.10"      # your server's public IP or hostname
+bind_host = "0.0.0.0"
+
+auth_port = 21030
+secure_port = 21031
+status_port = 21032           # /, /sessions, /clients, /nat, POST /internal/notify; 0 disables
+status_host = "0.0.0.0"
+# Game settings: the XML settings submodule (encoded to CXB just in time by the
+# CXB library, see docs/CXB.md) or a prebuilt .cxb file.
+game_settings = "gamesettings"
+cxb_library = ""              # path to libcxb; empty: $ACB_CXB_LIBRARY, then the system search path
+game_storage_file_size = 58484
+allow_private_sessions = true
+# In-game news panel: "anapi" for AN-API's /news/ posts (the launcher news,
+# read from anapi_url), "" for none, or a TOML file like news.example.toml.
+news = "anapi"
+news_sender = ""              # sender shown on AN-API news
+# in-game ranking tabs -> AN-API MMR modes (comma-separated ones are combined)
+ranking_free = "asb"
+ranking_coop = "e"
+ranking_team = "mh"
+ranking_overall = "asb,mh,e"
+ranking_combine = "mean"          # mean, sum or max
+ranking_placement_games = 10
+stats_modes = "asb,mh,e"          # statistic tabs and gamer cards: AN-API stats summed over these
+stats_default_xp = 650000         # XP reported to everyone (what the old server sent)
+idle_timeout = 30.0           # seconds without packets before a player is dropped
+
+# Persistence goes through AN-API (same host). The service key must match
+# AN-API's RDV_SERVICE_KEY; internal_key must match its RDV_NOTIFY_KEY.
+backend = "anapi"
+anapi_url = "http://127.0.0.1:8000"
+anapi_service_key = "change-me"
+internal_key = "change-me-too"
+
+# The server's own UDP relay for players who cannot reach each other directly.
+# Off by default ([nat] relay = false): players use AC Relay instead
+# (docs/NAT_TRAVERSAL.md). With [nat] relay = true, open this range in the firewall.
+relay_port_start = 40000
+relay_port_end = 40199
+relay_idle_timeout = 60.0
+
+# Write every datagram to a packetLog.bin-style capture (for debugging).
+packet_capture = ""
+log_level = "INFO"
+
+[nat]
+# NAT traversal switches; see docs/NAT_TRAVERSAL.md.
+push_to_target = true         # tell the target peer to probe the caller back
+push_to_caller = true         # tell the caller to probe every known candidate
+expand_caller = true          # also tell the target to probe the caller's own URLs (its AC Relay URL)
+expand_known = true           # add the target's registered URLs to the candidates
+reflect_candidates = true     # add the server-observed address to host candidates
+relay = false                 # offer the server's own relay (off by default; AC Relay replaces it)
+relay_in_contacts = true      # include the relay in "join a friend" results
+push_response_timeout = 5.0
+# AC Relay (client-side relay, docs/AC_RELAY_PROTOCOL.md) servers players may
+# pick: IPv4 addresses or hostnames, comma-separated or a list. Only used to
+# tag their URLs "acrelay" in the log and /nat; AC Relay URLs work without it.
+ac_relay_servers = ""         # e.g. "198.51.100.7, relay.example.org"

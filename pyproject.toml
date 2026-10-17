@@ -1,0 +1,27 @@
+[project]
+name = "acb-rdv-py"
+version = "0.1.0"
+description = "Assassin's Creed Brotherhood RendezVous server and a reusable Quazal library"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+dependencies = ["httpx>=0.27"]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+acb-rdv = "acb_rdv.__main__:main"
+onlineconfig = "onlineconfig.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["quazal*", "acb_rdv*", "onlineconfig*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"

@@ -1,0 +1,18 @@
+# onlineconfig: onlineconfigservice.ubi.com replacement for every game.
+# ONLINECONFIG_* environment variables override these (see onlineconfig/config.py).
+
+public_address = "203.0.113.10"   # default address games are sent to
+host = "0.0.0.0"
+port = 80
+
+# ACB and ACR are built in; override or add games here.
+[games.ACB]
+port = 21030
+
+[games.ACR]
+port = 21040
+# address = "203.0.113.11"        # if ACR's server runs elsewhere
+
+# [games.AC3]
+# ids = ["<onlineConfigID the game sends>", "AC3"]
+# port = 21050

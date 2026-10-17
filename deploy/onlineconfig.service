@@ -1,0 +1,20 @@
+[Unit]
+Description=Online config service for all games (onlineconfigservice.ubi.com replacement)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=acb-rdv
+Group=acb-rdv
+WorkingDirectory=/opt/acb-rdv-py
+ExecStart=/usr/bin/python3 -m onlineconfig -c /etc/acb-rdv/onlineconfig.toml
+# port 80 without running as root or authbind
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
